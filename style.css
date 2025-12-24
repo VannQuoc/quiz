@@ -127,6 +127,13 @@ h2 { color: var(--dark); margin-bottom: 20px; font-weight: 600; }
 }
 
 /* Buttons */
+.button-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
 .btn-main, .btn-secondary {
     padding: 15px 30px;
     border: none;
@@ -150,12 +157,12 @@ h2 { color: var(--dark); margin-bottom: 20px; font-weight: 600; }
     background: #fff;
     color: var(--dark);
     border: 2px solid #eee;
-    margin: 5px;
-    flex: 1;
+    width: 100%; /* Sửa để full width trên mobile */
 }
 .btn-secondary:hover { background: #f8f9fa; border-color: #ccc; }
 
 .result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+.result-actions .btn-secondary { width: auto; flex: 1; }
 
 /* Quiz Screen */
 .quiz-header { margin-bottom: 25px; }
@@ -290,7 +297,7 @@ th { background: var(--primary); color: white; padding: 15px; position: sticky; 
 td { padding: 12px 15px; border-bottom: 1px solid #eee; text-align: center; }
 tbody tr:nth-child(even) { background: #f9f9f9; }
 tbody tr:hover { background: #f1f0ff; }
-tbody tr:nth-child(1) td { color: #f1c40f; font-weight: bold; } /* Gold for top 1 */
+tbody tr:nth-child(1) td { color: #f1c40f; font-weight: bold; }
 
 /* Review */
 #review-list {
@@ -319,3 +326,76 @@ tbody tr:nth-child(1) td { color: #f1c40f; font-weight: bold; } /* Gold for top 
 
 .mt-20 { margin-top: 20px; }
 .sticky-bottom { position: sticky; bottom: -10px; margin-top: 20px; z-index: 5; }
+
+/* --- CSS MỚI CHO MODAL LUẬT CHƠI --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+}
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: scale(0.8);
+    transition: all 0.3s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+}
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+.modal-header {
+    background: var(--primary);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-header h2 { margin: 0; color: white; font-size: 1.2rem; }
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    text-align: left;
+}
+.modal-body h3 {
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+.modal-body h3:first-child { margin-top: 0; }
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+.modal-footer .btn-main {
+    width: auto;
+    padding: 10px 25px;
+}
