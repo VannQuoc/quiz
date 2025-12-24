@@ -4,7 +4,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbxV4zh4uLnJF8KTKj6HGnEG
 // ======================================================
 
 // THÊM: Mã lớp bảo mật (Viết thường để so sánh dễ dàng)
-const CLASS_CODE_SECRET = "hoahoc"; 
+const CLASS_CODE_SECRET = "hoahoc12"; 
 
 const questions = [
     { 
@@ -372,3 +372,4 @@ function startConfetti() {
     draw();
     setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 5000); 
 }
+
