@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vượt Chướng Ngại Vật</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="circles">
+        <div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="container glass-effect">
+            <div id="screen-start" class="screen active">
+                <div class="logo-area">
+                    <i class="fas fa-rocket rocket-icon"></i>
+                </div>
+                <h1>Vòng Thi Vượt Chướng Ngại Vật</h1>
+                <p class="subtitle">Kiến thức là sức mạnh</p>
+                
+                <div class="input-group">
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="input-name" placeholder="Tên Tổ/Nhóm" autocomplete="off" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-graduation-cap"></i>
+                        <input type="text" id="input-class" placeholder="Lớp" autocomplete="off" required>
+                    </div>
+                    <button onclick="startQuiz()" class="btn-main pulse-anim">
+                        Bắt đầu ngay <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="screen-quiz" class="screen">
+                <div class="quiz-header">
+                    <div class="stats-box">
+                        <div class="stat-item timer-box">
+                            <i class="far fa-clock"></i> <span id="timer">00:00</span>
+                        </div>
+                        <div class="stat-item streak-box">
+                            <i class="fas fa-fire"></i> <span id="streak-display">0</span>
+                        </div>
+                    </div>
+                    <div class="progress-track">
+                        <div id="progress-bar"></div>
+                    </div>
+                </div>
+
+                <div id="question-container">
+                    <div class="question-box">
+                        <h2 id="question-text">Đang tải câu hỏi...</h2>
+                    </div>
+                    <div id="answer-options" class="options-grid">
+                        </div>
+                </div>
+                <div id="feedback" class="feedback-msg"></div>
+            </div>
+
+            <div id="screen-result" class="screen">
+                <canvas id="confetti-canvas"></canvas>
+                <h2>Hoàn thành xuất sắc!</h2>
+                
+                <div class="score-card">
+                    <div class="score-circle">
+                        <span id="final-score">0</span>
+                        <small>Điểm</small>
+                    </div>
+                    <div class="result-details">
+                        <p><i class="far fa-clock"></i> Thời gian: <span id="total-time">0s</span></p>
+                        <p><i class="fas fa-star"></i> Xếp hạng: <span id="rank-text">--</span></p>
+                    </div>
+                </div>
+
+                <div class="result-actions">
+                    <button onclick="showLeaderboard()" class="btn-secondary"><i class="fas fa-trophy"></i> BXH</button>
+                    <button onclick="reviewQuiz()" class="btn-secondary"><i class="fas fa-eye"></i> Xem lại</button>
+                    <button onclick="location.reload()" class="btn-main"><i class="fas fa-redo"></i> Chơi lại</button>
+                </div>
+            </div>
+
+            <div id="screen-leaderboard" class="screen">
+                <h2><i class="fas fa-crown text-warning"></i> Bảng Vàng</h2>
+                <div class="table-wrapper">
+                    <table id="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên Nhóm</th>
+                                <th>Điểm</th>
+                                <th>Thời gian</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body"></tbody>
+                    </table>
+                </div>
+                <button onclick="showScreen('screen-result')" class="btn-main mt-20">Quay lại</button>
+            </div>
+
+            <div id="screen-review" class="screen">
+                <h2>Chi tiết đáp án</h2>
+                <div id="review-list" class="custom-scrollbar"></div>
+                <button onclick="showScreen('screen-result')" class="btn-main sticky-bottom">Đóng</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
