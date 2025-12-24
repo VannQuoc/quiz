@@ -3,6 +3,9 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbxV4zh4uLnJF8KTKj6HGnEG1icgM15f67syYqfF0Q_t6kBWw2bGMl0gDASPnnUZ-a3UGg/exec"; 
 // ======================================================
 
+// THÊM: Mã lớp bảo mật (Viết thường để so sánh dễ dàng)
+const CLASS_CODE_SECRET = "hoahoc"; 
+
 const questions = [
     { 
         q: "Kí hiệu cặp oxi hoá - khử ứng với quá trình khử: Fe3+ + 1e → Fe2+ là?", 
@@ -119,21 +122,45 @@ let streak = 0;
 let startTime, timerInterval;
 let userAnswers = [];
 let userData = { name: "", class: "" };
-let leaderboardCache = []; // Biến lưu tạm BXH
+let leaderboardCache = [];
 
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(screenId).classList.add('active');
 }
 
+// === CÁC HÀM XỬ LÝ MODAL LUẬT CHƠI ===
+function openRules() {
+    document.getElementById('rules-modal').classList.add('active');
+}
+
+function closeRules() {
+    document.getElementById('rules-modal').classList.remove('active');
+}
+// ======================================
+
 function startQuiz() {
-    userData.name = document.getElementById('input-name').value;
-    userData.class = document.getElementById('input-class').value;
+    const nameInput = document.getElementById('input-name');
+    const classInput = document.getElementById('input-class');
+    const codeInput = document.getElementById('input-code'); // Lấy ô nhập mã
+
+    userData.name = nameInput.value.trim();
+    userData.class = classInput.value.trim();
+    const enteredCode = codeInput.value.trim();
     
-    if (!userData.name || !userData.class) {
-        const inputs = document.querySelector('.input-group');
-        inputs.style.animation = "shake 0.4s";
-        setTimeout(() => inputs.style.animation = "", 400);
+    // 1. Kiểm tra điền đủ thông tin
+    if (!userData.name || !userData.class || !enteredCode) {
+        shakeInput();
+        alert("Vui lòng nhập đầy đủ Tên, Lớp và Mã vào thi!");
+        return;
+    }
+
+    // 2. Kiểm tra Mã lớp (Không phân biệt hoa thường)
+    if (enteredCode.toLowerCase() !== CLASS_CODE_SECRET.toLowerCase()) {
+        shakeInput();
+        alert("Mã lớp không chính xác! Vui lòng xin mã từ giáo viên.");
+        codeInput.value = ""; // Xóa mã sai
+        codeInput.focus();
         return;
     }
 
@@ -141,6 +168,12 @@ function startQuiz() {
     startTimer();
     showScreen('screen-quiz');
     loadQuestion();
+}
+
+function shakeInput() {
+    const inputs = document.querySelector('.input-group');
+    inputs.style.animation = "shake 0.4s";
+    setTimeout(() => inputs.style.animation = "", 400);
 }
 
 function startTimer() {
@@ -217,12 +250,11 @@ async function finishQuiz() {
     document.getElementById('total-time').innerText = `${totalTime}s`;
     document.getElementById('rank-text').innerText = "Đang lưu...";
 
-    // Gửi dữ liệu lên Google Sheet
     if (API_URL.includes("script.google.com")) {
         try {
             await fetch(API_URL, {
                 method: "POST",
-                mode: "no-cors", // Quan trọng để không bị chặn lỗi CORS
+                mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
                     name: userData.name, 
@@ -231,8 +263,6 @@ async function finishQuiz() {
                     time: totalTime 
                 })
             });
-            
-            // Sau khi gửi xong, hiển thị thông báo
             document.getElementById('rank-text').innerText = "Đã lưu!";
         } catch (error) {
             console.error("Lỗi lưu điểm:", error);
