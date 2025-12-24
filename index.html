@@ -30,11 +30,21 @@
                     </div>
                     <div class="input-field">
                         <i class="fas fa-graduation-cap"></i>
-                        <input type="text" id="input-class" placeholder="Lớp" autocomplete="off" required>
+                        <input type="text" id="input-class" placeholder="Tên Lớp (VD: 11A1)" autocomplete="off" required>
                     </div>
-                    <button onclick="startQuiz()" class="btn-main pulse-anim">
-                        Bắt đầu ngay <i class="fas fa-arrow-right"></i>
-                    </button>
+                    <div class="input-field">
+                        <i class="fas fa-key"></i>
+                        <input type="text" id="input-code" placeholder="Mã vào thi (Do GV cấp)" autocomplete="off" required>
+                    </div>
+
+                    <div class="button-group-vertical">
+                        <button onclick="startQuiz()" class="btn-main pulse-anim">
+                            Bắt đầu ngay <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button onclick="openRules()" class="btn-secondary">
+                            <i class="fas fa-book"></i> Xem luật chơi & Cách tính điểm
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -57,8 +67,7 @@
                     <div class="question-box">
                         <h2 id="question-text">Đang tải câu hỏi...</h2>
                     </div>
-                    <div id="answer-options" class="options-grid">
-                        </div>
+                    <div id="answer-options" class="options-grid"></div>
                 </div>
                 <div id="feedback" class="feedback-msg"></div>
             </div>
@@ -81,8 +90,7 @@
                 <div class="result-actions">
                     <button onclick="showLeaderboard()" class="btn-secondary"><i class="fas fa-trophy"></i> BXH</button>
                     <button onclick="reviewQuiz()" class="btn-secondary"><i class="fas fa-eye"></i> Xem lại</button>
-                    <button onclick="location.reload()" class="btn-main"><i class="fas fa-redo"></i> Chơi lại</button>
-                </div>
+                    </div>
             </div>
 
             <div id="screen-leaderboard" class="screen">
@@ -110,6 +118,32 @@
             </div>
         </div>
     </div>
+
+    <div id="rules-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-scroll"></i> Luật Chơi</h2>
+                <button onclick="closeRules()" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body custom-scrollbar">
+                <h3>1. Cách tham gia</h3>
+                <p>- Nhập tên Tổ/Nhóm, tên Lớp và <strong>Mã Lớp</strong> chính xác do giáo viên cung cấp để vào thi.</p>
+                <p>- Mỗi nhóm chỉ nên làm bài 1 lần để đảm bảo công bằng.</p>
+                
+                <h3>2. Cách tính điểm</h3>
+                <ul style="list-style-type: disc; padding-left: 20px; line-height: 1.6;">
+                    <li><strong>Điểm cơ bản:</strong> +10 điểm cho mỗi câu trả lời đúng.</li>
+                    <li><strong>Điểm tốc độ:</strong> Trả lời càng nhanh, điểm thưởng càng cao (tối đa +5 điểm).</li>
+                    <li><strong>Điểm chuỗi (Streak):</strong> Trả lời đúng liên tiếp sẽ được cộng thêm điểm thưởng (Streak x 2).</li>
+                    <li><strong>Trả lời sai:</strong> Không bị trừ điểm nhưng chuỗi thắng (Streak) sẽ quay về 0.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeRules()" class="btn-main">Đã hiểu</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
